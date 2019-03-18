@@ -1,0 +1,22 @@
+body {
+    background-image: url("../images/spotlight-background.png");
+    background-position: center;
+    background-attachment: fixed;
+}
+
+
+.question-box {
+    height: 720px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 25px;
+    background-color: black;
+}
+
+ul {
+    list-style: none;
+}
+
+.filler { 
+    height: 100px;
+}
