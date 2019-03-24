@@ -1,27 +1,29 @@
 $(document).ready(function () {
 
+    // variable for the space that will be used for the game on html
+    var gameSpace = $("#game-space");
+
+    // variable for the timer default time
+    var counterTime = 30;
+
     // create on click events
     ///////////////////////////////////////////////////////////////////////
-    //start game
-    $("#start-game").on("click", gameStart());
 
-    //reset game
-    $("#reset-game").on("click", reset());
 
-    //next question after selecting an answer
-    $("#user-answer").on("click", nextQuestion());
+    $(document).on("click", "#reset", function(e) {
+        trivia.resetGame();
+    });
+
+    $(document).on("click", ".solution-button", function(e) {
+        trivia.clicked(e);
+    });
+
+    $(document).on("click", "#start-game", function(e) {
+        $("#sub-container").prepend("<h5>Time Remaining: <span id='counter-time'>30</span> Seconds</h5>");
+        trivia.generateQuestion();
+    });
 
     ////////////////////////////////////////////////////////////////////////
-
-    // create var to store the start timer number of 30 seconds, and set countdown to not running
-    var counterTime = 30;
-    var clockCountdown = false;
-
-    //var to store right answers, wrong, and unanswered
-    var rightAnswer = 0;
-    var wrongAnswer = 0;
-    var unanswered = 0;
-    
 
     // create an array of questions to be stored in objects
     var questionsArray = [{
@@ -73,16 +75,47 @@ $(document).ready(function () {
         image: "assets/images/ivan-moody.gif"
     }];
 
-    //create var to store game start function
-function gameStart() {
+    //create the game functionality in an object
+    var trivia = {
+       questions: questionsArray,
+       currentQuestion: 0,
+       counter: counterTime,
+       rightAnswer: 0,
+       wrongAnswer: 0,
 
+    //create var to store game start function
+        counterStart: function(){
+            //selecting the trivia object, and selecting the counterTime to be decremented.
+            trivia.counter--;
+
+            //writing it into the HTML
+            $("counter-time").html(trivia.counter);
+
+            //if statement to trigger the timeUp function
+            if (trivia.counter === 0){
+                console.log("Time is up");
+                trivia.timeUp();
+            }
+        },
+        //create function to load a question
+        generateQuestion: function(){
+            //sets the interval for the timer to 1 second
+            timer = setInterval(trivia.countdown, 1000);
+
+            //write in the question to the html
+            gameSpace.html("<h4>" + questionsArray[this.currentQuestion].question + "</h4>");
+
+            //for loop to loop through the questions array
+            for (var i = 0; i < questionsArray[this.currentQuestion].answers.length; i++) {
+                //make buttons for the answers for the questions in the questions array
+                gameSpace.append("<button class='answer-buttons' id='button-style'" + "data-name='" + questionsArray[this.currentQuestion].answers[i] + "'>" + questionsArray[this.currentQuestion].answers[i]+ "</button>");
+            }
+        },
+
+ /*
 }
 // create countdown timer to include in gameStart function
 function countdown() {
-
-}
-//load question function 
-function loadQuestion() {
 
 }
 //display next question
@@ -116,5 +149,6 @@ function results() {
 function reset() {
 
 }
-
+    }*/
+}
 })

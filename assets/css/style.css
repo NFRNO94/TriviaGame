@@ -6,17 +6,28 @@ body {
 
 
 .question-box {
-    height: 720px;
+    height: 750px;
     margin-top: 50px;
     margin-bottom: 50px;
     padding: 25px;
     background-color: black;
+    position: relative;
 }
 
 ul {
     list-style: none;
 }
 
-.filler { 
-    height: 200px;
+#start-game {
+    margin-top: 200px;
 }
+
+#button-style {
+    width: 55%;
+    height: 20%;
+    margin-bottom: 15px;
+    color: white;
+    font-size: 28px;
+    background: transparent;
+}
+
