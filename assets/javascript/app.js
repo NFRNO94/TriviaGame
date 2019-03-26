@@ -75,6 +75,8 @@ $(document).ready(function () {
         image: "assets/images/ivan-moody.gif"
     }];
 
+    /////////////////////////////////////////////////////////////////////////
+
     //create the game functionality in an object
     var trivia = {
         questions: questionsArray,
@@ -83,6 +85,7 @@ $(document).ready(function () {
         rightAnswer: 0,
         wrongAnswer: 0,
 
+        //function to start the timer, and execute timeOut function
         counterStart: function () {
 
             //selecting the trivia object, and selecting the counter to be decremented by 1.
@@ -111,6 +114,7 @@ $(document).ready(function () {
                 gameSpace.append('<button class="solution-button" id="button-style"' + 'data-name="' + questionsArray[this.currentQuestion].answers[i] + '">' + questionsArray[this.currentQuestion].answers[i] + '</button>');
             }
         },
+        //function that goes to the next question
         nextQuestion: function () {
             //setting the game counter back to the start time of 30 seconds
             trivia.counter = counterTime;
@@ -124,6 +128,7 @@ $(document).ready(function () {
             //execute the generate question function to load a new question
             trivia.generateQuestion();
         },
+        //function for when time runs out(unanswered)
         timeOut: function () {
 
             //stops the execution of the timer
@@ -149,6 +154,7 @@ $(document).ready(function () {
                 setTimeout(trivia.nextQuestion, 3 * 1000);
             }
         },
+        //function to show results
         solution: function () {
             //clear the timer
             clearInterval(timer);
@@ -159,14 +165,15 @@ $(document).ready(function () {
             //show the timer
             $("#counter-time").html(trivia.counter);
             //show the right answers
-            gameSpace.append("<h4>Right Answers: " + trivia.rightAnswer + "</h4>");
+            gameSpace.append("<h5>Right Answers: " + trivia.rightAnswer + "</h5>");
             //show the wrong answers
-            gameSpace.append("<h4>Wrong Answers: " + trivia.wrongAnswer + "</h4>");
+            gameSpace.append("<h5>Wrong Answers: " + trivia.wrongAnswer + "</h5>");
             //show how many questionsArray were unanswered
-            gameSpace.append("<h4>Unanswered Questions: " + (questionsArray.length - (trivia.wrongAnswer + trivia.rightAnswer)) + "<h4>");
+            gameSpace.append("<h5>Unanswered Questions: " + (questionsArray.length - (trivia.wrongAnswer + trivia.rightAnswer)) + "<h5>");
             //create a button to start a new game using the id "reset" from the on click event
-            gameSpace.append('<br><button id="reset">New Game</button>');
+            gameSpace.append('<br><button class="btn btn-dark btn-lg" id="reset">New Game</button>');
         },
+        //gets user answer from the click event
         userAnswer: function () {
             //clear the timer
             clearInterval(timer);
@@ -181,6 +188,7 @@ $(document).ready(function () {
                 this.answerWrong();
             }
         },
+        //function for when answer is wrong
         answerWrong: function () {
             //increment the wrong answer by 1
             trivia.wrongAnswer++;
@@ -188,24 +196,26 @@ $(document).ready(function () {
             //clear timer
             clearInterval(timer);
 
+
             //write in indicator that answer is wrong using an h2
             gameSpace.html("<h2>Incorrect!</h2>");
 
             //show the correct answer
-            gameSpace.append("<h4>The Correct Answer is: " + questionsArray[trivia.currentQuestion].correctAnswer + "</h4>");
+            gameSpace.append("<h3>The Correct Answer is: " + questionsArray[trivia.currentQuestion].correctAnswer + "</h3>");
 
             //show the image for the correct answer
             gameSpace.append('<img src="' + questionsArray[trivia.currentQuestion].image + '">');
 
             //if statement for when there are no more questionsArray
             if (trivia.currentQuestion === questionsArray.length - 1) {
-                //execture the solution function and set time to 30 seconds
+                //execute the solution function after 3 seconds
                 setTimeout(trivia.solution, 3 * 1000);
-                //else indicates to run nextQuestion if there are more questionsArray
+                //else indicates to run nextQuestion after 3 seconds if there are more questions
             } else {
                 setTimeout(trivia.nextQuestion, 3 * 1000);
             }
         },
+        //function for when answer is right
         answerCorrect: function () {
             //increment right answers by 1
             trivia.rightAnswer++;
@@ -221,13 +231,14 @@ $(document).ready(function () {
 
             //if statement for when there are no more questionsArray
             if (trivia.currentQuestion === questionsArray.length - 1) {
-                //execture the solution function and set time to 30 seconds
+                //execute the solution function after 3 seconds if no more questions left
                 setTimeout(trivia.solution, 3 * 1000);
-                //else indicates to run nextQuestion if there are more questionsArray
+                //else indicates to run nextQuestion if there are more questions after 3 seconds
             } else {
                 setTimeout(trivia.nextQuestion, 3 * 1000);
             }
         },
+        //resets the game to start a new game
         resetGame: function () {
             //set current question to 0
             trivia.currentQuestion = 0;
