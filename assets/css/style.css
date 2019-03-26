@@ -24,10 +24,12 @@ ul {
 
 #button-style {
     width: 55%;
-    height: 20%;
+    height: 25%;
     margin-bottom: 15px;
+    margin-top: 15px;
     color: white;
     font-size: 28px;
+    cursor: pointer;
     background: transparent;
 }
 
